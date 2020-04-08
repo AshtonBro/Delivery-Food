@@ -1,0 +1,25 @@
+{
+  "name": "delivery_food",
+  "version": "1.0.0",
+  "description": "delivery site",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AshtonBro/Delivery_Food.git"
+  },
+  "author": "Evgenii Solovev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AshtonBro/Delivery_Food/issues"
+  },
+  "homepage": "https://github.com/AshtonBro/Delivery_Food#readme",
+  "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-sass": "^4.0.2"
+  }
+}
