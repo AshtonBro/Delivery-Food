@@ -29,7 +29,14 @@
     padding-top: 2px;
 }
 
+.buttons {
+    display: flex;
+    align-items: center;
+}
+
 .button {
+    display: flex;
+    align-items: center;
     padding: 8px 16px;
     background: #FFFFFF;    
     border: 1px solid #D9D9D9;
@@ -45,13 +52,9 @@
     background: #1890FF;
     border: 1px solid #1890FF;
     color: #fff;
+    margin-right: 10px;
 }
 
-.button-icon{
+.button-icon {
     margin-right: 6px;
-    vertical-align: middle;
-}
-
-.button-text {
-    vertical-align: middle;
 }
