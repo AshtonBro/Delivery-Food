@@ -2,6 +2,16 @@
   -webkit-box-sizing: border-box;
   box-sizing: border-box; }
 
+@font-face {
+  font-family: 'San Francisco Pro Display Regular';
+  src: url("../fonts/SFProDisplay-Regular.eot");
+  src: url("../fonts/SFProDisplay-Regular.eot?#iefix") format("embedded-opentype"), url("../fonts/SFProDisplay-Regular.woff") format("woff"), url("../fonts/SFProDisplay-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+
+body {
+  font-family: 'San Francisco Pro Display Regular'; }
+
 .container {
   max-width: 1200px;
   margin: 0; }
@@ -16,20 +26,19 @@
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between; }
-
-.search-input {
-  background: #ffffff;
-  border: 1px solid #d9d9d9;
-  border-radius: 2px;
-  height: 40px;
-  width: 690px;
-  font-size: 16px;
-  line-height: 24px;
-  background-image: url(../img/header/home.svg);
-  background-repeat: no-repeat;
-  background-position: left 11px center;
-  padding-left: 34px;
-  padding-top: 2px; }
+  .header-input_search {
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    height: 40px;
+    width: 690px;
+    font-size: 16px;
+    line-height: 24px;
+    background-image: url(../img/header/home.svg);
+    background-repeat: no-repeat;
+    background-position: left 11px center;
+    padding-left: 34px;
+    padding-top: 2px; }
 
 .buttons {
   display: -webkit-box;
@@ -48,7 +57,7 @@
   align-items: center;
   padding: 8px 16px;
   background: #fff;
-  border: 1px solid #D9D9D9;
+  border: 1px solid #d9d9d9;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   -webkit-box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.0015);
