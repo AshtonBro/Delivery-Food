@@ -10,35 +10,12 @@
   font-style: normal; }
 
 body {
-  font-family: 'San Francisco Pro Display Regular'; }
+  font-family: 'Roboto', sans-serif;
+  padding-top: 44px; }
 
 .container {
   max-width: 1200px;
-  margin: 0; }
-
-.header {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between; }
-  .header-input_search {
-    background: #fff;
-    border: 1px solid #d9d9d9;
-    border-radius: 2px;
-    height: 40px;
-    width: 690px;
-    font-size: 16px;
-    line-height: 24px;
-    background-image: url(../img/header/home.svg);
-    background-repeat: no-repeat;
-    background-position: left 11px center;
-    padding-left: 34px;
-    padding-top: 2px; }
+  margin: auto; }
 
 .buttons {
   display: -webkit-box;
@@ -73,3 +50,94 @@ body {
     margin-right: 10px; }
   .button-icon {
     margin-right: 6px; }
+
+.input {
+  font-family: 'San Francisco Pro Display Regular';
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  font-size: 16px;
+  line-height: 24px;
+  padding: 8px;
+  background-repeat: no-repeat;
+  background-position: left 11px center;
+  padding-left: 34px; }
+
+.header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin-bottom: 40px; }
+  .header-input_search {
+    width: 690px;
+    background-image: url(../img/header/home.svg); }
+
+.promo {
+  -webkit-box-shadow: 0px 7px 12px rgba(158, 158, 163, 0.1);
+  box-shadow: 0px 7px 12px rgba(158, 158, 163, 0.1);
+  background: #FFF1B8 url(../img/promo/pizza.png) no-repeat top -100px right -247px/924px;
+  border-radius: 10px;
+  padding: 68px 70px;
+  margin-bottom: 56px; }
+  .promo-title {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 39px;
+    line-height: 46px;
+    color: #302c34; }
+  .promo-text {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 28px;
+    color: #302c34;
+    max-width: 500px; }
+
+.section-heading {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between; }
+
+.section-title {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 42px;
+  margin: 0; }
+
+.section-input-search {
+  background-image: url(../img/restaurant/search.svg);
+  background-repeat: no-repeat;
+  background-position: left 11px center;
+  width: 306px; }
+
+.cards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap; }
+
+.card {
+  background: #fff;
+  -webkit-box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+  border-radius: 7px;
+  overflow: hidden; }
+  .card img {
+    height: 250px;
+    width: 384px;
+    -o-object-fit: cover;
+    object-fit: cover; }
