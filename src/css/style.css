@@ -108,7 +108,8 @@ body {
   align-items: center;
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
-  justify-content: space-between; }
+  justify-content: space-between;
+  margin-bottom: 44px; }
 
 .section-title {
   font-style: normal;
@@ -127,6 +128,12 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap; }
 
@@ -135,9 +142,73 @@ body {
   -webkit-box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
   border-radius: 7px;
-  overflow: hidden; }
-  .card img {
+  overflow: hidden;
+  margin-bottom: 30px; }
+  .card-img {
     height: 250px;
     width: 384px;
     -o-object-fit: cover;
     object-fit: cover; }
+  .card-text {
+    padding-top: 20px;
+    padding-bottom: 35px;
+    padding-left: 23px;
+    padding-right: 23px; }
+  .card-heading {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between; }
+  .card-title {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 32px; }
+  .card-tag {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 20px;
+    color: #fff;
+    background: #262626;
+    border-radius: 2px;
+    padding: 1px 8px; }
+  .card-info {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center; }
+  .card-raiting {
+    margin-right: 26px;
+    color: #FFC107;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 32px; }
+    .card-raiting-star {
+      margin-right: 7.5px; }
+  .card-price {
+    color: #8C8C8C;
+    font-size: 18px;
+    line-height: 32px;
+    margin-right: 10px; }
+    .card-price:after {
+      content: '';
+      width: 5px;
+      height: 5px;
+      background-color: #8C8C8C;
+      display: inline-block;
+      vertical-align: middle;
+      border-radius: 50%;
+      margin-left: 10px; }
+  .card-category {
+    color: #8C8C8C;
+    font-size: 18px;
+    line-height: 32px; }

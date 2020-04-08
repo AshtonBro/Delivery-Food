@@ -3,6 +3,7 @@
         display: flex
         align-items: center
         justify-content: space-between
+        margin-bottom: 44px
     &-title
         font-style: normal;
         font-weight: bold;
@@ -28,8 +29,63 @@
     border-radius: 7px
     // свойство скрывает всё что стоит за пределом карточки
     overflow: hidden
-    img
+    margin-bottom: 30px
+    &-img
         height: 250px
         width: 384px
         // если картинка нетакая какая надо, она сама обрезается высчитывается
         object-fit: cover
+    &-text
+        padding-top: 20px
+        padding-bottom: 35px
+        padding-left: 23px
+        padding-right: 23px
+    &-heading
+        display: flex
+        align-items: center
+        justify-content: space-between
+    &-title
+        font-style: normal
+        font-weight: bold
+        font-size: 24px
+        line-height: 32px
+    &-tag
+        font-style: normal
+        font-weight: normal
+        font-size: 12px
+        line-height: 20px
+        color: $bg-color
+        background: #262626
+        border-radius: 2px
+        padding: 1px 8px
+    &-info
+        display: flex
+        align-items: center
+    &-raiting
+        margin-right: 26px
+        color: $color-raiting
+        font-style: normal
+        font-weight: bold
+        font-size: 18px
+        line-height: 32px
+        &-star
+            margin-right: 7.5px
+    &-price
+        color: $text-color-small
+        font-size: 18px
+        line-height: 32px
+        margin-right: 10px
+        &:after
+            content: ''
+            width: 5px
+            height: 5px
+            background-color: $text-color-small
+            display: inline-block
+            vertical-align: middle
+            border-radius: 50%
+            margin-left: 10px
+
+    &-category
+        color: $text-color-small
+        font-size: 18px
+        line-height: 32px
