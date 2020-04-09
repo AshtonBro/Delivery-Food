@@ -34,7 +34,7 @@
     text-decoration: none
     &-img
         height: 250px
-        width: 384px
+        width: 100%
         // если картинка нетакая какая надо, она сама обрезается высчитывается
         object-fit: cover
     &-text
@@ -42,6 +42,9 @@
         padding-bottom: 35px
         padding-left: 23px
         padding-right: 23px
+        &-reg
+            position: relative
+            min-height: 275px
     &-heading
         display: flex
         align-items: center
@@ -111,4 +114,6 @@
         display: flex
         align-items: center
         margin-top: 24px
-
+        &-reg
+            position: absolute
+            bottom: 30px
