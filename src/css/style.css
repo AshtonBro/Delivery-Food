@@ -17,6 +17,10 @@ body {
   max-width: 1200px;
   margin: auto; }
 
+.main {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(1.04%, rgba(245, 245, 245, 0)), to(#F5F5F5));
+  background: linear-gradient(180deg, rgba(245, 245, 245, 0) 1.04%, #F5F5F5 100%); }
+
 .buttons {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -212,3 +216,22 @@ body {
     color: #8C8C8C;
     font-size: 18px;
     line-height: 32px; }
+
+.footer {
+  padding: 60px 0; }
+  .footer-block {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between; }
+  .footer-link {
+    display: inline-block;
+    color: #595959;
+    text-decoration: none; }
+    .footer-link:not(:last-child) {
+      margin-right: 15px; }
