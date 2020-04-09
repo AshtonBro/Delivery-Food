@@ -54,6 +54,8 @@ body {
     margin-right: 10px; }
   .button-icon {
     margin-right: 6px; }
+  .button-card-text {
+    margin-right: 10px; }
 
 .input {
   font-family: 'San Francisco Pro Display Regular';
@@ -112,9 +114,6 @@ body {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
   margin-bottom: 44px; }
 
 .section-title {
@@ -122,13 +121,14 @@ body {
   font-weight: bold;
   font-size: 36px;
   line-height: 42px;
-  margin: 0; }
+  margin: 0;
+  colot: #000000;
+  margin-right: 30px; }
 
 .section-input-search {
   background-image: url(../img/restaurant/search.svg);
-  background-repeat: no-repeat;
-  background-position: left 11px center;
-  width: 306px; }
+  width: 306px;
+  margin-left: auto; }
 
 .cards {
   display: -webkit-box;
@@ -151,7 +151,8 @@ body {
   overflow: hidden;
   margin-bottom: 30px;
   -ms-flex-preferred-size: 31%;
-  flex-basis: 31%; }
+  flex-basis: 31%;
+  text-decoration: none; }
   .card-img {
     height: 250px;
     width: 384px;
@@ -177,6 +178,8 @@ body {
     font-weight: bold;
     font-size: 24px;
     line-height: 32px; }
+    .card-title-reg {
+      font-weight: 400; }
   .card-tag {
     font-style: normal;
     font-weight: normal;
@@ -218,6 +221,12 @@ body {
       vertical-align: middle;
       border-radius: 50%;
       margin-left: 10px; }
+    .card-price-bold {
+      font-style: normal;
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 32px;
+      margin-left: 30px; }
   .card-category {
     color: #8C8C8C;
     font-size: 18px;
@@ -226,6 +235,18 @@ body {
     overflow: hidden;
     white-space: nowrap;
     max-width: 150px; }
+  .card-ingredients {
+    color: #8C8C8C;
+    font-size: 18px;
+    line-height: 21px; }
+  .card-buttons {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-top: 24px; }
 
 .footer {
   padding: 60px 0; }

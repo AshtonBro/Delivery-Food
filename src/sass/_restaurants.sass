@@ -2,7 +2,6 @@
     &-heading
         display: flex
         align-items: center
-        justify-content: space-between
         margin-bottom: 44px
     &-title
         font-style: normal;
@@ -10,12 +9,13 @@
         font-size: 36px;
         line-height: 42px;
         margin: 0
+        colot: #000000
+        margin-right: 30px
     &-input
         &-search
             background-image: url(../img/restaurant/search.svg)
-            background-repeat: no-repeat
-            background-position: left 11px center
             width: 306px
+            margin-left: auto
 
 .cards
     display: flex
@@ -31,6 +31,7 @@
     overflow: hidden
     margin-bottom: 30px
     flex-basis: 31%
+    text-decoration: none
     &-img
         height: 250px
         width: 384px
@@ -50,6 +51,8 @@
         font-weight: bold
         font-size: 24px
         line-height: 32px
+        &-reg
+            font-weight: 400
     &-tag
         font-style: normal
         font-weight: normal
@@ -86,7 +89,12 @@
             vertical-align: middle
             border-radius: 50%
             margin-left: 10px
-
+        &-bold
+            font-style: normal
+            font-weight: bold
+            font-size: 20px
+            line-height: 32px
+            margin-left: 30px
     &-category
         color: $text-color-small
         font-size: 18px
@@ -95,3 +103,12 @@
         overflow: hidden
         white-space: nowrap
         max-width: 150px
+    &-ingredients
+        color: $text-color-small
+        font-size: 18px
+        line-height: 21px
+    &-buttons
+        display: flex
+        align-items: center
+        margin-top: 24px
+
