@@ -30,6 +30,7 @@
     // свойство скрывает всё что стоит за пределом карточки
     overflow: hidden
     margin-bottom: 30px
+    flex-basis: 31%
     &-img
         height: 250px
         width: 384px
@@ -61,6 +62,7 @@
     &-info
         display: flex
         align-items: center
+        flex-wrap: wrap
     &-raiting
         margin-right: 26px
         color: $color-raiting
@@ -89,3 +91,7 @@
         color: $text-color-small
         font-size: 18px
         line-height: 32px
+        text-overflow: ellipsis
+        overflow: hidden
+        white-space: nowrap
+        max-width: 150px
