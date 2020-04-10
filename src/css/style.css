@@ -304,7 +304,7 @@ body {
     display: -ms-flexbox;
     display: flex; }
   .modal-dialog {
-    max-width: 780ox;
+    max-width: 780px;
     width: 95%;
     background: #ffffff;
     border-radius: 5px;
