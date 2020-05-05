@@ -9,6 +9,7 @@ function toggleModal() {
   modal.classList.toggle("is-open");
 }
 
+new WOW().init();
 
 // ? Authorization users
 const btnAuth = document.querySelector('.button-auth'),
