@@ -5,20 +5,20 @@ var gutil = require('gulp-util');
 var autoprefixer = require('gulp-autoprefixer');
 
 // Запускаем сервер, предварительно скопилировав SASS
-gulp.task('serve', ['css'], () => {
+gulp.task('serve', ['sass'], () => {
 
     bs.init({
         server: "./src"
     });
 
-    gulp.watch("src/css/*.css", ['css']);
-    gulp.watch("src/js/*.js").on('change', bs.reload);
+    gulp.watch("src/sass/*.sass", ['sass']);
     gulp.watch("src/*.html").on('change', bs.reload);
 });
 
 // Делаем компиляцию SASS в CSS 
-gulp.task('css', () => {
-    return gulp.src("src/css/*.css")
+gulp.task('sass', () => {
+    return gulp.src("src/sass/*.sass")
+        .pipe(sass())
         .pipe(autoprefixer({
             browsers: ['last 2 versions'],
             cascade: false
