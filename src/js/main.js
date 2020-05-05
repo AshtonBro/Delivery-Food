@@ -19,7 +19,7 @@ const btnAuth = document.querySelector('.button-auth'),
   userName = document.querySelector('.user-name'),
   btnOut = document.querySelector('.button-out');
 
-let login = '';
+let login = localStorage.getItem('user-name');
 
 // * toggle function - close and open block
 const toogleModalAuth = () => {
@@ -31,12 +31,13 @@ const authorized = () => {
   console.log('access open');
 
   const logOut = () => {
-    login = '';
+    login = null;
 
     btnAuth.style.display = '';
     userName.style.display = '';
     btnOut.style.display = '';
     btnOut.removeEventListener('click', logOut);
+    localStorage.removeItem('user-name');
     checkAuth();
   };
 
@@ -55,6 +56,9 @@ const notAuthorized = () => {
   const logIn = () => {
     event.preventDefault();
     login = loginInput.value;
+
+    localStorage.setItem('user-name', login);
+
     toogleModalAuth();
     btnAuth.removeEventListener('click', toogleModalAuth);
     closeAuth.removeEventListener('click', toogleModalAuth);
