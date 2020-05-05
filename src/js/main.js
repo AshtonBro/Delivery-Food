@@ -1,18 +1,10 @@
-'use strict';
+const cartButton = document.querySelector("#cart-button");
+const modal = document.querySelector(".modal");
+const close = document.querySelector(".close");
 
-const cardBtnBasket = document.getElementById('card-button-basket');
-const modal = document.querySelector('.modal');
-const closeBtn = document.querySelector('.modal-close');
-// const buttonActive = document.getElementsByClassName('button-active');
+cartButton.addEventListener("click", toggleModal);
+close.addEventListener("click", toggleModal);
 
-const toggleModal = () => {
-    modal.classList.toggle("modal-active");
-};
-
-new WOW().init();
-
-cardBtnBasket.addEventListener('click', toggleModal);
-closeBtn.addEventListener('click', toggleModal);
-
-// buttonActive.forEach(elem => elem.addEventListener('click', toggleModal));
-
+function toggleModal() {
+  modal.classList.toggle("is-open");
+}
