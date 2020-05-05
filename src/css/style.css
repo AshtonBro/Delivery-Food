@@ -581,6 +581,17 @@ a button {
   font-size: 20px;
   line-height: 23px; }
 
+.warnings-msg {
+  color: #df5b27;
+  opacity: 1;
+  visibility: visible; }
+
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: .55s opacity, .55s visibility;
+  transition: .55s opacity, .55s visibility; }
+
 @media (max-width: 1366px) {
   .container {
     max-width: 960px; }

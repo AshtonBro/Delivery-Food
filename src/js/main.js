@@ -18,13 +18,19 @@ const btnAuth = document.querySelector('.button-auth'),
   logInForm = document.querySelector('#logInForm'),
   loginInput = document.querySelector('#login'),
   userName = document.querySelector('.user-name'),
-  btnOut = document.querySelector('.button-out');
+  btnOut = document.querySelector('.button-out'),
+  labelAuth = document.querySelector('.label-auth'),
+  modalBody = document.querySelector('.modal-body');
 
 let login = localStorage.getItem('user-name');
 
 // * toggle function - close and open block
 const toogleModalAuth = () => {
   modalAuth.classList.toggle('is-open');
+  logInForm.reset();
+  if (document.querySelectorAll('.warnings-msg').length == 1) {
+    document.querySelector('.warnings-msg').remove();
+  }
 };
 
 // * authorized function
@@ -60,12 +66,27 @@ const notAuthorized = () => {
 
     localStorage.setItem('user-name', login);
 
-    toogleModalAuth();
-    btnAuth.removeEventListener('click', toogleModalAuth);
-    closeAuth.removeEventListener('click', toogleModalAuth);
-    logInForm.removeEventListener('submit', logIn);
-    logInForm.reset();
-    checkAuth();
+    if (login === '') {
+      let warningsMsg = document.createElement('div');
+      warningsMsg.textContent = 'Пожалуйста введите логин';
+      warningsMsg.classList.add('warnings-msg');
+      let arrMsq = document.querySelectorAll('.warnings-msg');
+      if (!arrMsq.length == 1) {
+        labelAuth.insertAdjacentElement('beforeBegin', warningsMsg);
+        setTimeout(() => {
+          warningsMsg.remove();
+        }, 3000);
+      }
+
+    } else {
+      toogleModalAuth();
+      btnAuth.removeEventListener('click', toogleModalAuth);
+      closeAuth.removeEventListener('click', toogleModalAuth);
+      logInForm.removeEventListener('submit', logIn);
+      logInForm.reset();
+      checkAuth();
+    }
+
   };
 
   btnAuth.addEventListener('click', toogleModalAuth);

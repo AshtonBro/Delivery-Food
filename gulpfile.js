@@ -12,6 +12,7 @@ gulp.task('serve', ['sass'], () => {
     });
 
     gulp.watch("src/sass/*.sass", ['sass']);
+    gulp.watch("src/js/*.js").on('change', bs.reload);
     gulp.watch("src/*.html").on('change', bs.reload);
 });
 
