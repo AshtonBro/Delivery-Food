@@ -62,13 +62,13 @@ a button {
   line-height: 24px; }
 
 .button:hover {
-  background: #1890ff;
-  border: 1px solid #1890ff;
+  background: #1890FF;
+  border: 1px solid #1890FF;
   color: #fff; }
 
 .button-primary {
-  background: #1890ff;
-  border: 1px solid #1890ff;
+  background: #1890FF;
+  border: 1px solid #1890FF;
   color: #fff;
   margin-right: 10px; }
 
@@ -328,13 +328,13 @@ a button {
   background-position: 0 7px;
   padding-left: 20px;
   margin-right: 26px;
-  color: #ffc107;
+  color: #FFC107;
   font-weight: bold;
   font-size: 18px;
   line-height: 32px; }
 
 .price .category {
-  color: #8c8c8c;
+  color: #8C8C8C;
   font-size: 18px;
   line-height: 32px; }
 
@@ -342,7 +342,7 @@ a button {
   margin-right: 10px; }
 
 .ingredients {
-  color: #8c8c8c;
+  color: #8C8C8C;
   font-size: 18px;
   line-height: 21px; }
 
@@ -356,7 +356,7 @@ a button {
   content: "";
   width: 5px;
   height: 5px;
-  background-color: #8c8c8c;
+  background-color: #8C8C8C;
   display: inline-block;
   vertical-align: middle;
   border-radius: 50%;
