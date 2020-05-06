@@ -1,17 +1,8 @@
+'use strict';
+
 const cartButton = document.querySelector("#cart-button");
 const modal = document.querySelector(".modal");
 const btncClose = document.querySelector(".close");
-
-cartButton.addEventListener("click", toggleModal);
-btncClose.addEventListener("click", toggleModal);
-
-function toggleModal() {
-  modal.classList.toggle("is-open");
-}
-
-new WOW().init();
-
-// ? Authorization users
 const btnAuth = document.querySelector('.button-auth'),
   modalAuth = document.querySelector('.modal-auth'),
   closeAuth = document.querySelector('.close-auth'),
@@ -24,11 +15,16 @@ const btnAuth = document.querySelector('.button-auth'),
   containerPromo = document.querySelector('.container-promo'),
   restaurants = document.querySelector('.restaurants'),
   menu = document.querySelector('.menu'),
-  logo = document.querySelectorAll('.logo');
+  logo = document.querySelectorAll('.logo'),
+  cardsMenu = document.querySelector('.cards-menu');
 
 let login = localStorage.getItem('user-name');
 
 // * toggle function - close and open block
+const toggleModal = () => {
+  modal.classList.toggle("is-open");
+};
+
 const toogleModalAuth = () => {
   modalAuth.classList.toggle('is-open');
   logInForm.reset();
@@ -142,7 +138,6 @@ createCardRestaurant();
 const createCardMenu = () => {
   const card = document.createElement('div');
   card.className = 'card';
-
   card.insertAdjacentHTML('beforeend', `
           <img src="img/pizza-plus/pizza-girls.jpg" alt="image" class="card-image" />
           <div class="card-text">
@@ -165,6 +160,7 @@ const createCardMenu = () => {
           </div>
   `);
 
+  cardsMenu.insertAdjacentElement('beforeend', card);
 };
 
 // * Opens the menu of the selected restaurant and hides the prom and the list of other restaurants
@@ -177,13 +173,21 @@ const openCurCard = () => {
     containerPromo.classList.add('hide');
     restaurants.classList.add('hide');
     menu.classList.remove('hide');
-  }
 
-  createCardMenu();
+    cardsMenu.textContent = '';
+
+    createCardMenu();
+    createCardMenu();
+    createCardMenu();
+  }
 };
 
-// * The event handler on the logo, hides the restaurant menu returns promos and other restaurants
+
+// * The event handlers
+cartButton.addEventListener("click", toggleModal);
+btncClose.addEventListener("click", toggleModal);
 cardsRestaurants.addEventListener('click', openCurCard);
+// * The event handler on the logo, hides the restaurant menu returns promos and other restaurants
 logo.forEach(elem => {
   elem.addEventListener('click', () => {
     containerPromo.classList.remove('hide');
@@ -191,3 +195,5 @@ logo.forEach(elem => {
     menu.classList.add('hide');
   });
 });
+
+new WOW().init();
