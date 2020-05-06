@@ -1,8 +1,8 @@
 'use strict';
 
-const cartButton = document.querySelector("#cart-button"),
-  modal = document.querySelector(".modal"),
-  btncClose = document.querySelector(".close"),
+const cartButton = document.querySelector('#cart-button'),
+  modal = document.querySelector('.modal'),
+  btncClose = document.querySelector('.close'),
   btnAuth = document.querySelector('.button-auth'),
   modalAuth = document.querySelector('.modal-auth'),
   closeAuth = document.querySelector('.close-auth'),
@@ -16,20 +16,33 @@ const cartButton = document.querySelector("#cart-button"),
   restaurants = document.querySelector('.restaurants'),
   menu = document.querySelector('.menu'),
   logo = document.querySelectorAll('.logo'),
+  headerLogo = document.querySelector('.header-logo'),
   cardsMenu = document.querySelector('.cards-menu');
 
 let login = localStorage.getItem('user-name');
 
-// * toggle function - close and open block
-const toggleModal = () => {
-  modal.classList.toggle("is-open");
+// * Regular expressions for login
+const valid = (str) => {
+  const reqLogin = /^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$/;
+  // if(!reqLogin.test(str)) {
+  //   if (str.length < 20) {console.log('длинная строка');
+  // }
+  return reqLogin.test(str);
 };
 
+// * toggle function - close and open block
+const toggleModal = () => {
+  modal.classList.toggle('is-open');
+};
+
+// * add/remove class for autarization block, reset login form, remowe warning msg
 const toogleModalAuth = () => {
   modalAuth.classList.toggle('is-open');
   logInForm.reset();
   if (document.querySelectorAll('.warnings-msg').length == 1) {
     document.querySelector('.warnings-msg').remove();
+    loginInput.style.borderColor = '';
+    localStorage.removeItem('user-name');
   }
 };
 
@@ -66,29 +79,33 @@ const notAuthorized = () => {
     event.preventDefault();
     login = loginInput.value;
 
-    localStorage.setItem('user-name', login);
-    // * check if login == '' then show to error msg
-    if (login === '') {
-      let warningsMsg = document.createElement('div');
-      warningsMsg.textContent = 'Пожалуйста введите логин';
-      warningsMsg.classList.add('warnings-msg');
-      let arrMsq = document.querySelectorAll('.warnings-msg');
-      if (!arrMsq.length == 1) {
-        labelAuth.insertAdjacentElement('beforeBegin', warningsMsg);
-        setTimeout(() => {
-          warningsMsg.remove();
-        }, 3000);
-      }
-      // * Check if there is text in the login, if so then continue to work
-    } else {
+    // * Check if there is text in the login, if so then continue to work
+    if (valid(loginInput.value)) {
+      loginInput.style.borderColor = '';
+      login = loginInput.value;
+      localStorage.setItem('user-name', login);
       toogleModalAuth();
       btnAuth.removeEventListener('click', toogleModalAuth);
       closeAuth.removeEventListener('click', toogleModalAuth);
       logInForm.removeEventListener('submit', logIn);
       logInForm.reset();
       checkAuth();
+    } else {
+      // * check if login == '' then show to error msg
+      let warningsMsg = document.createElement('div');
+      warningsMsg.textContent = 'Пожалуйста правильный логин';
+      warningsMsg.classList.add('warnings-msg');
+      let arrMsq = document.querySelectorAll('.warnings-msg');
+      if (!arrMsq.length == 1) {
+        labelAuth.insertAdjacentElement('beforeBegin', warningsMsg);
+        setTimeout(() => {
+          warningsMsg.remove();
+          loginInput.style.borderColor = '';
+          localStorage.removeItem('user-name');
+        }, 3000);
+      }
+      loginInput.style.borderColor = 'tomato';
     }
-
   };
 
   btnAuth.addEventListener('click', toogleModalAuth);
@@ -96,7 +113,14 @@ const notAuthorized = () => {
   logInForm.addEventListener('submit', logIn);
 };
 
-// * check authorized 
+// * exit to the main menu
+const returnMain = () => {
+  containerPromo.classList.remove('hide');
+  restaurants.classList.remove('hide');
+  menu.classList.add('hide');
+};
+
+// * check authorized
 const checkAuth = () => {
   if (login) {
     authorized();
@@ -128,7 +152,6 @@ const createCardRestaurant = () => {
   `;
 
   cardsRestaurants.insertAdjacentHTML('beforeend', card);
-
 };
 
 // * Create a menu card
@@ -136,27 +159,30 @@ const createCardRestaurant = () => {
 const createCardMenu = () => {
   const card = document.createElement('div');
   card.className = 'card';
-  card.insertAdjacentHTML('beforeend', `
-          <img src="img/pizza-plus/pizza-girls.jpg" alt="image" class="card-image" />
-          <div class="card-text">
-            <div class="card-heading">
-              <h3 class="card-title card-title-reg">Пицца Девичник</h3>
-            </div>
-            <div class="card-info">
-              <div class="ingredients">
-                Соус томатный, постное тесто, нежирный сыр, кукуруза, лук,
-                маслины, грибы, помидоры, болгарский перец.
-              </div>
-            </div>
-            <div class="card-buttons">
-              <button class="button button-primary button-add-cart">
-                <span class="button-card-text">В корзину</span>
-                <span class="button-cart-svg"></span>
-              </button>
-              <strong class="card-price-bold">450 ₽</strong>
-            </div>
+  card.insertAdjacentHTML(
+    'beforeend',
+    `
+      <img src="img/pizza-plus/pizza-girls.jpg" alt="image" class="card-image" />
+      <div class="card-text">
+        <div class="card-heading">
+          <h3 class="card-title card-title-reg">Пицца Девичник</h3>
+        </div>
+        <div class="card-info">
+          <div class="ingredients">
+            Соус томатный, постное тесто, нежирный сыр, кукуруза, лук,
+            маслины, грибы, помидоры, болгарский перец.
           </div>
-  `);
+        </div>
+        <div class="card-buttons">
+          <button class="button button-primary button-add-cart">
+            <span class="button-card-text">В корзину</span>
+            <span class="button-cart-svg"></span>
+          </button>
+          <strong class="card-price-bold">450 ₽</strong>
+        </div>
+      </div>
+  `
+  );
 
   cardsMenu.insertAdjacentElement('beforeend', card);
 };
@@ -181,7 +207,6 @@ const openCurCard = () => {
       createCardMenu();
       createCardMenu();
       createCardMenu();
-
     } else {
       toogleModalAuth();
     }
@@ -189,25 +214,30 @@ const openCurCard = () => {
 };
 
 // * The event handlers ------------------------------------------ addEventListener
-cartButton.addEventListener("click", toggleModal);
-btncClose.addEventListener("click", toggleModal);
+cartButton.addEventListener('click', toggleModal);
+btncClose.addEventListener('click', toggleModal);
 cardsRestaurants.addEventListener('click', openCurCard);
+
 // * The event handler on the logo, hides the restaurant menu returns promos and other restaurants
-logo.forEach(elem => {
-  elem.addEventListener('click', () => {
-    containerPromo.classList.remove('hide');
-    restaurants.classList.remove('hide');
-    menu.classList.add('hide');
-  });
-});
-// * if logged out throws to the main menu
-btnOut.addEventListener('click', () => {
-  containerPromo.classList.remove('hide');
-  restaurants.classList.remove('hide');
-  menu.classList.add('hide');
+logo.forEach((elem) => {
+  elem.addEventListener('click', returnMain);
 });
 
+// * if logged out throws to the main menu
+btnOut.addEventListener('click', returnMain);
+
+// * initialization functions
 checkAuth();
 createCardRestaurant();
 
+// * Swiper slider init
+new Swiper('.swiper-container', {
+  loop: true,
+  speed: 2000,
+  autoplay: {
+    delay: 3000,
+  }
+});
+
+// * initialization wow animated method
 new WOW().init();
