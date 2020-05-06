@@ -44,6 +44,7 @@ const authorized = () => {
     userName.style.display = '';
     btnOut.style.display = '';
     btnOut.removeEventListener('click', logOut);
+    userName.innerText = '';
     localStorage.removeItem('user-name');
     checkAuth();
   };
@@ -131,6 +132,7 @@ const createCardRestaurant = () => {
 };
 
 // * Create a menu card
+
 const createCardMenu = () => {
   const card = document.createElement('div');
   card.className = 'card';
@@ -166,19 +168,27 @@ const openCurCard = () => {
   const restaurant = targer.closest('.card-restaurant');
 
   if (restaurant) {
-    containerPromo.classList.add('hide');
-    restaurants.classList.add('hide');
-    menu.classList.remove('hide');
+    console.log(userName.textContent);
 
-    cardsMenu.textContent = '';
+    // * Check if logged in then open the menu, if not then no
+    if (!userName.innerText == '') {
+      containerPromo.classList.add('hide');
+      restaurants.classList.add('hide');
+      menu.classList.remove('hide');
 
-    createCardMenu();
-    createCardMenu();
-    createCardMenu();
+      cardsMenu.textContent = '';
+
+      createCardMenu();
+      createCardMenu();
+      createCardMenu();
+
+    } else {
+      toogleModalAuth();
+    }
   }
 };
 
-// * The event handlers
+// * The event handlers ------------------------------------------ addEventListener
 cartButton.addEventListener("click", toggleModal);
 btncClose.addEventListener("click", toggleModal);
 cardsRestaurants.addEventListener('click', openCurCard);
@@ -189,6 +199,12 @@ logo.forEach(elem => {
     restaurants.classList.remove('hide');
     menu.classList.add('hide');
   });
+});
+// * if logged out throws to the main menu
+btnOut.addEventListener('click', () => {
+  containerPromo.classList.remove('hide');
+  restaurants.classList.remove('hide');
+  menu.classList.add('hide');
 });
 
 checkAuth();
