@@ -1,9 +1,9 @@
 'use strict';
 
-const cartButton = document.querySelector("#cart-button");
-const modal = document.querySelector(".modal");
-const btncClose = document.querySelector(".close");
-const btnAuth = document.querySelector('.button-auth'),
+const cartButton = document.querySelector("#cart-button"),
+  modal = document.querySelector(".modal"),
+  btncClose = document.querySelector(".close"),
+  btnAuth = document.querySelector('.button-auth'),
   modalAuth = document.querySelector('.modal-auth'),
   closeAuth = document.querySelector('.close-auth'),
   logInForm = document.querySelector('#logInForm'),
@@ -33,7 +33,7 @@ const toogleModalAuth = () => {
   }
 };
 
-// * authorized function
+// * User authorized function
 const authorized = () => {
   console.log('access open');
   // * We clear the login field, local storage and hide the buttons
@@ -104,8 +104,6 @@ const checkAuth = () => {
   }
 };
 
-checkAuth();
-
 // * Create a restaurant card and a description of it
 const createCardRestaurant = () => {
 
@@ -131,8 +129,6 @@ const createCardRestaurant = () => {
   cardsRestaurants.insertAdjacentHTML('beforeend', card);
 
 };
-
-createCardRestaurant();
 
 // * Create a menu card
 const createCardMenu = () => {
@@ -182,7 +178,6 @@ const openCurCard = () => {
   }
 };
 
-
 // * The event handlers
 cartButton.addEventListener("click", toggleModal);
 btncClose.addEventListener("click", toggleModal);
@@ -195,5 +190,8 @@ logo.forEach(elem => {
     menu.classList.add('hide');
   });
 });
+
+checkAuth();
+createCardRestaurant();
 
 new WOW().init();
