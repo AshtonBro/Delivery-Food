@@ -21,7 +21,7 @@ gulp.task('sass', () => {
     return gulp.src("src/sass/*.sass")
         .pipe(sass())
         .pipe(autoprefixer({
-            browsers: ['last 2 versions'],
+            browsers: ['last 5 versions'],
             cascade: false
         }))
         .pipe(gulp.dest("src/css"))

@@ -20,7 +20,11 @@ const btnAuth = document.querySelector('.button-auth'),
   userName = document.querySelector('.user-name'),
   btnOut = document.querySelector('.button-out'),
   labelAuth = document.querySelector('.label-auth'),
-  modalBody = document.querySelector('.modal-body');
+  cardsRestaurants = document.querySelector('.cards-restaurants'),
+  containerPromo = document.querySelector('.container-promo'),
+  restaurants = document.querySelector('.restaurants'),
+  menu = document.querySelector('.menu'),
+  logo = document.querySelectorAll('.logo');
 
 let login = localStorage.getItem('user-name');
 
@@ -36,7 +40,7 @@ const toogleModalAuth = () => {
 // * authorized function
 const authorized = () => {
   console.log('access open');
-
+  // * We clear the login field, local storage and hide the buttons
   const logOut = () => {
     login = null;
 
@@ -60,12 +64,13 @@ const authorized = () => {
 const notAuthorized = () => {
   console.log('access denied');
 
+  // * login function
   const logIn = () => {
     event.preventDefault();
     login = loginInput.value;
 
     localStorage.setItem('user-name', login);
-
+    // * check if login == '' then show to error msg
     if (login === '') {
       let warningsMsg = document.createElement('div');
       warningsMsg.textContent = 'Пожалуйста введите логин';
@@ -77,7 +82,7 @@ const notAuthorized = () => {
           warningsMsg.remove();
         }, 3000);
       }
-
+      // * Check if there is text in the login, if so then continue to work
     } else {
       toogleModalAuth();
       btnAuth.removeEventListener('click', toogleModalAuth);
@@ -104,3 +109,85 @@ const checkAuth = () => {
 };
 
 checkAuth();
+
+// * Create a restaurant card and a description of it
+const createCardRestaurant = () => {
+
+  const card = `
+    <a class="card card-restaurant wow fadeInUp" data-wow-delay="0.4s"">
+        <img src=" img/tanuki/preview.jpg" alt="image" class="card-image" />
+        <div class="card-text">
+          <div class="card-heading">
+            <h3 class="card-title">Тануки</h3>
+            <span class="card-tag tag">60 мин</span>
+          </div>
+          <div class="card-info">
+            <div class="rating">
+              4.5
+            </div>
+            <div class="price">От 1 200 ₽</div>
+            <div class="category">Суши, роллы</div>
+          </div>
+        </div>
+    </a>
+  `;
+
+  cardsRestaurants.insertAdjacentHTML('beforeend', card);
+
+};
+
+createCardRestaurant();
+
+// * Create a menu card
+const createCardMenu = () => {
+  const card = document.createElement('div');
+  card.className = 'card';
+
+  card.insertAdjacentHTML('beforeend', `
+          <img src="img/pizza-plus/pizza-girls.jpg" alt="image" class="card-image" />
+          <div class="card-text">
+            <div class="card-heading">
+              <h3 class="card-title card-title-reg">Пицца Девичник</h3>
+            </div>
+            <div class="card-info">
+              <div class="ingredients">
+                Соус томатный, постное тесто, нежирный сыр, кукуруза, лук,
+                маслины, грибы, помидоры, болгарский перец.
+              </div>
+            </div>
+            <div class="card-buttons">
+              <button class="button button-primary button-add-cart">
+                <span class="button-card-text">В корзину</span>
+                <span class="button-cart-svg"></span>
+              </button>
+              <strong class="card-price-bold">450 ₽</strong>
+            </div>
+          </div>
+  `);
+
+};
+
+// * Opens the menu of the selected restaurant and hides the prom and the list of other restaurants
+const openCurCard = () => {
+  const targer = event.target;
+
+  const restaurant = targer.closest('.card-restaurant');
+
+  if (restaurant) {
+    containerPromo.classList.add('hide');
+    restaurants.classList.add('hide');
+    menu.classList.remove('hide');
+  }
+
+  createCardMenu();
+};
+
+// * The event handler on the logo, hides the restaurant menu returns promos and other restaurants
+cardsRestaurants.addEventListener('click', openCurCard);
+logo.forEach(elem => {
+  elem.addEventListener('click', () => {
+    containerPromo.classList.remove('hide');
+    restaurants.classList.remove('hide');
+    menu.classList.add('hide');
+  });
+});
