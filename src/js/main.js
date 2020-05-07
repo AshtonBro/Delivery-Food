@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const cartButton = document.querySelector("#cart-button"),
   modal = document.querySelector(".modal"),
@@ -17,7 +17,11 @@ const cartButton = document.querySelector("#cart-button"),
   menu = document.querySelector(".menu"),
   logo = document.querySelectorAll(".logo"),
   headerLogo = document.querySelector(".header-logo"),
-  cardsMenu = document.querySelector(".cards-menu");
+  cardsMenu = document.querySelector(".cards-menu"),
+  restaurantTitle = document.querySelector(".restaurant-title"),
+  rating = document.querySelector(".rating"),
+  minPrice = document.querySelector(".price"),
+  category = document.querySelector(".category");
 
 let login = localStorage.getItem("user-name");
 
@@ -156,7 +160,10 @@ const createCardRestaurant = (restaurant) => {
   } = restaurant;
 
   const card = `
-    <a class="card card-restaurant wow fadeInUp" data-wow-delay="0.4s"" data-products="${products}">
+    <a class="card card-restaurant wow fadeInUp" data-wow-delay="0.4s"" 
+    data-products="${products}"
+    data-info="${[name, price, stars, kitchen]}"
+    >
         <img src="${image}" alt="image" class="card-image" />
         <div class="card-text">
           <div class="card-heading">
@@ -190,7 +197,7 @@ const createCardMenu = ({
   card.insertAdjacentHTML(
     "beforeend",
     `
-      <img src="${image}" alt="image" class="card-image" />
+      <img src="${image}" alt="${name}" class="card-image" />
       <div class="card-text">
         <div class="card-heading">
           <h3 class="card-title card-title-reg">${name}</h3>
@@ -222,10 +229,21 @@ const openCurCard = () => {
   if (restaurant) {
     // * Check if logged in then open the menu, if not then no
     if (!userName.innerText == "") {
+
+      const infoRestaurant = ((restaurant.dataset.info).split(','));
+
+      const [name, price, stars, kitchen] = infoRestaurant;
+
       cardsMenu.textContent = "";
       containerPromo.classList.add("hide");
       restaurants.classList.add("hide");
       menu.classList.remove("hide");
+
+      restaurantTitle.textContent = name;
+      rating.textContent = stars;
+      minPrice.textContent = `От ${price} ₽`;
+      category.textContent = kitchen;
+
       // * handles the url, start creating the card as many times as there is in the database
       getData(`db/${restaurant.dataset.products}`).then(function (data) {
         data.forEach(createCardMenu);
@@ -236,6 +254,7 @@ const openCurCard = () => {
   }
 };
 
+// * Calls up all the necessary functions.
 const init = () => {
   // * handles the url, start creating the card as many times as there is in the database
   getData("db/partners.json").then(function (data) {
