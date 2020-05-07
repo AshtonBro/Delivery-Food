@@ -25,10 +25,13 @@ let login = localStorage.getItem("user-name");
 const getData = async function (url) {
   const response = await fetch(url);
 
-  console.log(response.json());
+  if (!response.ok) {
+    throw new Error(
+      `Ошибка по адресу ${url}, статус ошибки ${response.status}!`
+    );
+  }
+  return await response.json();
 };
-
-getData("db/partners.json");
 
 // * Regular expressions for login
 const valid = (str) => {
@@ -163,7 +166,6 @@ const createCardRestaurant = () => {
 };
 
 // * Create a menu card
-
 const createCardMenu = () => {
   const card = document.createElement("div");
   card.className = "card";
@@ -220,6 +222,10 @@ const openCurCard = () => {
     }
   }
 };
+
+getData("db/partners.json").then(function (data) {
+  console.log("data: ", data);
+});
 
 // * The event handlers ------------------------------------------ addEventListener
 cartButton.addEventListener("click", toggleModal);
