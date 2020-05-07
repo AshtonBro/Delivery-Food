@@ -21,12 +21,13 @@ const cartButton = document.querySelector('#cart-button'),
   restaurantTitle = document.querySelector('.restaurant-title'),
   rating = document.querySelector('.rating'),
   minPrice = document.querySelector('.price'),
-  category = document.querySelector('.category');
+  category = document.querySelector('.category'),
+  inputSearch = document.querySelector('.input-search');
 
 let login = localStorage.getItem('user-name');
 
 // * asynchronous function, server request and work with JSON bd
-const getData = async function (url) {
+const getData = async (url) => {
   const response = await fetch(url);
 
   if (!response.ok) {
@@ -246,7 +247,7 @@ const openCurCard = () => {
       category.textContent = kitchen;
 
       // * handles the url, start creating the card as many times as there is in the database
-      getData(`db/${restaurant.dataset.products}`).then(function (data) {
+      getData(`db/${restaurant.dataset.products}`).then((data) => {
         data.forEach(createCardMenu);
       });
     } else {
@@ -255,10 +256,68 @@ const openCurCard = () => {
   }
 };
 
+// * Function for finding food and restaurants
+const search = (event) => {
+  // * keyCode = 13 it is Enter
+  if (event.keyCode === 13) {
+    const target = event.target;
+    const targetValue = target.value.toLowerCase().trim();
+    target.value = '';
+
+    if (!targetValue || targetValue.length < 3) {
+      target.style.backgroundColor = 'tomato';
+      setTimeout(() => {
+        target.style.backgroundColor = '';
+      }, 2000);
+      return;
+    }
+
+    const arrayOfProducts = [];
+
+    getData('db/partners.json').then((data) => {
+      const products = data.map((item) => {
+        return item.products;
+      });
+      products.forEach((productJson) => {
+        getData(`db/${productJson}`).then((data) => {
+            arrayOfProducts.push(...data);
+
+            const searchMenu = arrayOfProducts.filter((item) => {
+              return item.name.toLowerCase().includes(targetValue);
+            });
+
+            console.log(searchMenu);
+
+            cardsMenu.textContent = '';
+
+            containerPromo.classList.add('hide');
+            restaurants.classList.add('hide');
+            menu.classList.remove('hide');
+
+            restaurantTitle.textContent = `Результат поиска: ${targetValue}`;
+            rating.textContent = '';
+            minPrice.textContent = '';
+            category.textContent = '';
+
+            return searchMenu;
+          })
+          .then((data) => {
+            if (data.length == 0) {
+              console.log('по данному запросу ничего не найдено');
+            } else {
+              data.forEach(createCardMenu);
+            }
+          });
+      });
+    });
+  }
+
+};
+
 // * Calls up all the necessary functions.
 const init = () => {
   // * handles the url, start creating the card as many times as there is in the database
-  getData('db/partners.json').then(function (data) {
+  getData('db/partners.json').then((data) => {
     data.forEach(createCardRestaurant);
   });
 
@@ -266,11 +325,14 @@ const init = () => {
   cartButton.addEventListener('click', toggleModal);
   btncClose.addEventListener('click', toggleModal);
   cardsRestaurants.addEventListener('click', openCurCard);
+  inputSearch.addEventListener('keydown', search);
 
   // * The event handler on the logo, hides the restaurant menu returns promos and other restaurants
   logo.forEach((elem) => {
     elem.addEventListener('click', returnMain);
   });
+
+  // * запретить поиск если не аторизован
 
   // * if logged out throws to the main menu
   btnOut.addEventListener('click', returnMain);
