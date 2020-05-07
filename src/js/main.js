@@ -177,25 +177,26 @@ const createCardRestaurant = (restaurant) => {
   cardsRestaurants.insertAdjacentHTML("beforeend", card);
 };
 
-// * Create a menu card
-const createCardMenu = (cardsMenu) => {
-  console.log('cardsMenu: ', cardsMenu);
-
-
+// * Create a menu card, Destructured object in receiving parameters
+const createCardMenu = ({
+  description,
+  id,
+  image,
+  name,
+  price
+}) => {
   const card = document.createElement("div");
   card.className = "card";
   card.insertAdjacentHTML(
     "beforeend",
     `
-      <img src="img/pizza-plus/pizza-girls.jpg" alt="image" class="card-image" />
+      <img src="${image}" alt="image" class="card-image" />
       <div class="card-text">
         <div class="card-heading">
-          <h3 class="card-title card-title-reg">Пицца Девичник</h3>
+          <h3 class="card-title card-title-reg">${name}</h3>
         </div>
         <div class="card-info">
-          <div class="ingredients">
-            Соус томатный, постное тесто, нежирный сыр, кукуруза, лук,
-            маслины, грибы, помидоры, болгарский перец.
+          <div class="ingredients">${description}.
           </div>
         </div>
         <div class="card-buttons">
@@ -203,7 +204,7 @@ const createCardMenu = (cardsMenu) => {
             <span class="button-card-text">В корзину</span>
             <span class="button-cart-svg"></span>
           </button>
-          <strong class="card-price-bold">450 ₽</strong>
+          <strong class="card-price-bold">${price} ₽</strong>
         </div>
       </div>
   `
