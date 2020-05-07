@@ -142,21 +142,33 @@ const checkAuth = () => {
 };
 
 // * Create a restaurant card and a description of it
-const createCardRestaurant = () => {
+const createCardRestaurant = (restaurant) => {
+
+  // * Destructured object
+  const {
+    image,
+    kitchen,
+    name,
+    price,
+    products,
+    stars,
+    time_of_delivery
+  } = restaurant;
+
   const card = `
-    <a class="card card-restaurant wow fadeInUp" data-wow-delay="0.4s"">
-        <img src=" img/tanuki/preview.jpg" alt="image" class="card-image" />
+    <a class="card card-restaurant wow fadeInUp" data-wow-delay="0.4s"" data-products="${products}">
+        <img src="${image}" alt="image" class="card-image" />
         <div class="card-text">
           <div class="card-heading">
-            <h3 class="card-title">Тануки</h3>
-            <span class="card-tag tag">60 мин</span>
+            <h3 class="card-title">${name}</h3>
+            <span class="card-tag tag">${time_of_delivery} мин</span>
           </div>
           <div class="card-info">
             <div class="rating">
-              4.5
+            ${stars}
             </div>
-            <div class="price">От 1 200 ₽</div>
-            <div class="category">Суши, роллы</div>
+            <div class="price">От ${price} ₽</div>
+            <div class="category">${kitchen}</div>
           </div>
         </div>
     </a>
@@ -166,7 +178,10 @@ const createCardRestaurant = () => {
 };
 
 // * Create a menu card
-const createCardMenu = () => {
+const createCardMenu = (cardsMenu) => {
+  console.log('cardsMenu: ', cardsMenu);
+
+
   const card = document.createElement("div");
   card.className = "card";
   card.insertAdjacentHTML(
@@ -204,54 +219,55 @@ const openCurCard = () => {
   const restaurant = targer.closest(".card-restaurant");
 
   if (restaurant) {
-    console.log(userName.textContent);
-
     // * Check if logged in then open the menu, if not then no
     if (!userName.innerText == "") {
+      cardsMenu.textContent = "";
       containerPromo.classList.add("hide");
       restaurants.classList.add("hide");
       menu.classList.remove("hide");
-
-      cardsMenu.textContent = "";
-
-      createCardMenu();
-      createCardMenu();
-      createCardMenu();
+      // * handles the url, start creating the card as many times as there is in the database
+      getData(`db/${restaurant.dataset.products}`).then(function (data) {
+        data.forEach(createCardMenu);
+      });
     } else {
       toogleModalAuth();
     }
   }
 };
 
-getData("db/partners.json").then(function (data) {
-  console.log("data: ", data);
-});
+const init = () => {
+  // * handles the url, start creating the card as many times as there is in the database
+  getData("db/partners.json").then(function (data) {
+    data.forEach(createCardRestaurant);
+  });
 
-// * The event handlers ------------------------------------------ addEventListener
-cartButton.addEventListener("click", toggleModal);
-btncClose.addEventListener("click", toggleModal);
-cardsRestaurants.addEventListener("click", openCurCard);
+  // * The event handlers ------------------------------------------ addEventListener
+  cartButton.addEventListener("click", toggleModal);
+  btncClose.addEventListener("click", toggleModal);
+  cardsRestaurants.addEventListener("click", openCurCard);
 
-// * The event handler on the logo, hides the restaurant menu returns promos and other restaurants
-logo.forEach((elem) => {
-  elem.addEventListener("click", returnMain);
-});
+  // * The event handler on the logo, hides the restaurant menu returns promos and other restaurants
+  logo.forEach((elem) => {
+    elem.addEventListener("click", returnMain);
+  });
 
-// * if logged out throws to the main menu
-btnOut.addEventListener("click", returnMain);
+  // * if logged out throws to the main menu
+  btnOut.addEventListener("click", returnMain);
 
-// * initialization functions
-checkAuth();
-createCardRestaurant();
+  // * initialization functions
+  checkAuth();
 
-// * Swiper slider init
-new Swiper(".swiper-container", {
-  loop: true,
-  speed: 2000,
-  autoplay: {
-    delay: 3000,
-  },
-});
+  // * Swiper slider init
+  new Swiper(".swiper-container", {
+    loop: true,
+    speed: 2000,
+    autoplay: {
+      delay: 3000,
+    },
+  });
 
-// * initialization wow animated method
-new WOW().init();
+  // * initialization wow animated method
+  new WOW().init();
+};
+
+init();
