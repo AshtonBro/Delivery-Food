@@ -22,9 +22,14 @@ const cartButton = document.querySelector('#cart-button'),
   rating = document.querySelector('.rating'),
   minPrice = document.querySelector('.price'),
   category = document.querySelector('.category'),
-  inputSearch = document.querySelector('.input-search');
+  inputSearch = document.querySelector('.input-search'),
+  modalBody = document.querySelector('.modal-body'),
+  modalPricetag = document.querySelector('.modal-pricetag'),
+  BtnClearCart = document.querySelector('.clear-cart');
 
 let login = localStorage.getItem('user-name');
+
+const basket = [];
 
 // * asynchronous function, server request and work with JSON bd
 const getData = async (url) => {
@@ -75,15 +80,18 @@ const authorized = () => {
     btnOut.style.display = '';
     btnOut.removeEventListener('click', logOut);
     userName.innerText = '';
+    cartButton.style.display = '';
     localStorage.removeItem('user-name');
     checkAuth();
+    returnMain();
   };
 
   userName.textContent = login;
 
   btnAuth.style.display = 'none';
   userName.style.display = 'inline';
-  btnOut.style.display = 'block';
+  btnOut.style.display = 'flex';
+  cartButton.style.display = 'flex';
   btnOut.addEventListener('click', logOut);
 };
 
@@ -211,11 +219,11 @@ const createCardMenu = ({
           </div>
         </div>
         <div class="card-buttons">
-          <button class="button button-primary button-add-cart">
+          <button class="button button-primary button-add-cart" id="${id}">
             <span class="button-card-text">В корзину</span>
             <span class="button-cart-svg"></span>
           </button>
-          <strong class="card-price-bold">${price} ₽</strong>
+          <strong class="card-price card-price-bold">${price} ₽</strong>
         </div>
       </div>
   `
@@ -322,6 +330,93 @@ const search = (event) => {
   }
 };
 
+// * The function adds the item to the cart.
+const addToBusket = (event) => {
+  const target = event.target;
+
+  // * A button when clicked that will add the product to the basket
+  const buttonAddToBusket = target.closest('.button-add-cart');
+
+  if (buttonAddToBusket) {
+    const cardFood = target.closest('.card');
+    const cardTitle = cardFood.querySelector('.card-title-reg').textContent;
+    const cardPrice = cardFood.querySelector('.card-price').textContent;
+    const id = buttonAddToBusket.id;
+
+    // * Check is there already such a product in our basket
+    const food = basket.find((item) => {
+      return item.id === id;
+    });
+
+    // * If such an id already exists, then add +1, if not, then add the product
+    if (food) {
+      food.count += 1;
+    } else {
+      basket.push({
+        id: id,
+        title: cardTitle,
+        price: cardPrice,
+        count: 1
+      });
+    }
+  }
+};
+
+// * The function will form a list of goods
+const renderCart = () => {
+  modalBody.textContent = '';
+  // * Creates an element with parameters and adds it to the basket
+  basket.forEach(({
+    id,
+    title,
+    price,
+    count
+  }) => {
+    const itemForBasket = ` 
+    <div class="food-row">
+      <span class="food-name">${title}</span>
+      <strong class="food-price">${price}</strong>
+      <div class="food-counter">
+        <button class="counter-button counter-minus" data-id=${id}>-</button>
+        <span class="counter">${count}</span>
+        <button class="counter-button counter-plus" data-id=${id}>+</button>
+      </div>
+    </div>
+    `;
+
+    modalBody.insertAdjacentHTML('afterbegin', itemForBasket);
+  });
+
+  const totalPrice = basket.reduce((result, item) => {
+    return result + (parseFloat(item.price) * item.count);
+  }, 0);
+
+  modalPricetag.textContent = totalPrice + ' ₽';
+
+};
+
+// * the function changes count when clicking on + and - in the basket
+const changeCount = (event) => {
+  const target = event.target;
+
+  if (target.classList.contains('counter-button')) {
+    const food = basket.find((item) => {
+      return item.id === target.dataset.id;
+    });
+    if (target.classList.contains('counter-minus')) {
+      food.count--;
+      if (food.count === 0) {
+        basket.splice(basket.indexOf(food), 1);
+      }
+    }
+    if (target.classList.contains('counter-plus')) {
+      food.count++;
+    }
+    renderCart();
+  }
+
+};
+
 // * Calls up all the necessary functions.
 const init = () => {
   // * handles the url, start creating the card as many times as there is in the database
@@ -329,11 +424,21 @@ const init = () => {
     data.forEach(createCardRestaurant);
   });
 
-  // * The event handlers ------------------------------------------ addEventListener
-  cartButton.addEventListener('click', toggleModal);
+  // * The event handlers ------------------------------------------ addEventListeners
+  cartButton.addEventListener('click', () => {
+    renderCart();
+    toggleModal();
+  });
+  BtnClearCart.addEventListener('click', () => {
+    basket.length = 0;
+    renderCart();
+    toggleModal();
+  });
   btncClose.addEventListener('click', toggleModal);
   cardsRestaurants.addEventListener('click', openCurCard);
   inputSearch.addEventListener('keydown', search);
+  cardsMenu.addEventListener('click', addToBusket);
+  modalBody.addEventListener('click', changeCount);
 
   // * The event handler on the logo, hides the restaurant menu returns promos and other restaurants
   logo.forEach((elem) => {
