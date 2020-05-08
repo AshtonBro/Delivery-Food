@@ -258,60 +258,68 @@ const openCurCard = () => {
 
 // * Function for finding food and restaurants
 const search = (event) => {
-  // * keyCode = 13 it is Enter
-  if (event.keyCode === 13) {
-    const target = event.target;
-    const targetValue = target.value.toLowerCase().trim();
-    target.value = '';
 
-    if (!targetValue || targetValue.length < 3) {
-      target.style.backgroundColor = 'tomato';
-      setTimeout(() => {
-        target.style.backgroundColor = '';
-      }, 2000);
-      return;
-    }
+  if (!userName.innerText == '') {
+    // * keyCode = 13 it is Enter
+    if (event.keyCode === 13) {
+      const target = event.target;
+      const targetValue = target.value.toLowerCase().trim();
+      target.value = '';
 
-    const arrayOfProducts = [];
+      if (!targetValue || targetValue.length < 3) {
+        target.style.backgroundColor = 'tomato';
+        setTimeout(() => {
+          target.style.backgroundColor = '';
+        }, 2000);
+        return;
+      }
 
-    getData('db/partners.json').then((data) => {
-      const products = data.map((item) => {
-        return item.products;
-      });
-      products.forEach((productJson) => {
-        getData(`db/${productJson}`).then((data) => {
-            arrayOfProducts.push(...data);
+      const arrayOfProducts = [];
 
-            const searchMenu = arrayOfProducts.filter((item) => {
-              return item.name.toLowerCase().includes(targetValue);
+      getData('db/partners.json').then((data) => {
+        const products = data.map((item) => {
+          return item.products;
+        });
+        products.forEach((productJson) => {
+          getData(`db/${productJson}`).then((data) => {
+              arrayOfProducts.push(...data);
+
+              const searchMenu = arrayOfProducts.filter((item) => {
+                return item.name.toLowerCase().includes(targetValue);
+              });
+
+              console.log(searchMenu);
+
+              cardsMenu.textContent = '';
+
+              containerPromo.classList.add('hide');
+              restaurants.classList.add('hide');
+              menu.classList.remove('hide');
+
+              restaurantTitle.textContent = `Результат поиска:  ${targetValue}`;
+              rating.textContent = '';
+              minPrice.textContent = `найдено cовпадений: ${searchMenu.length}`;
+              category.textContent = '';
+
+              return searchMenu;
+            })
+            .then((data) => {
+              if (data.length == 0) {
+                console.log('по данному запросу ничего не найдено');
+              } else {
+                data.forEach(createCardMenu);
+              }
             });
-
-            console.log(searchMenu);
-
-            cardsMenu.textContent = '';
-
-            containerPromo.classList.add('hide');
-            restaurants.classList.add('hide');
-            menu.classList.remove('hide');
-
-            restaurantTitle.textContent = `Результат поиска: ${targetValue}`;
-            rating.textContent = '';
-            minPrice.textContent = '';
-            category.textContent = '';
-
-            return searchMenu;
-          })
-          .then((data) => {
-            if (data.length == 0) {
-              console.log('по данному запросу ничего не найдено');
-            } else {
-              data.forEach(createCardMenu);
-            }
-          });
+        });
       });
-    });
+    }
+  } else {
+    toogleModalAuth();
+    console.log('inputSearch: ', inputSearch.value);
+    inputSearch.value = '';
+    modalAuth.setAttribute("tabindex", "1");
+    modalAuth.focus();
   }
-
 };
 
 // * Calls up all the necessary functions.
@@ -331,8 +339,6 @@ const init = () => {
   logo.forEach((elem) => {
     elem.addEventListener('click', returnMain);
   });
-
-  // * запретить поиск если не аторизован
 
   // * if logged out throws to the main menu
   btnOut.addEventListener('click', returnMain);
