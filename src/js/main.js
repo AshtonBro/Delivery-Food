@@ -34,9 +34,7 @@ const basket = [];
 // * The function returns login-bound information from the local storage
 const loadBasket = () => {
   if (localStorage.getItem(login)) {
-    JSON.parse(localStorage.getItem(login)).forEach((item) => {
-      basket.push(item);
-    });
+    basket.push(...JSON.parse(localStorage.getItem(login)));
   }
 };
 
@@ -160,13 +158,7 @@ const returnMain = () => {
 };
 
 // * check authorized
-const checkAuth = () => {
-  if (login) {
-    authorized();
-  } else {
-    notAuthorized();
-  }
-};
+const checkAuth = () => login ? authorized() : notAuthorized();
 
 // * Create a restaurant card and a description of it
 const createCardRestaurant = (restaurant) => {
@@ -351,6 +343,7 @@ const addToBusket = (event) => {
   // * A button when clicked that will add the product to the basket
   const buttonAddToBusket = target.closest('.button-add-cart');
 
+  // * If you clicked in a basket, we pick up the item’s assignment, price and id
   if (buttonAddToBusket) {
     const cardFood = target.closest('.card');
     const cardTitle = cardFood.querySelector('.card-title-reg').textContent;
@@ -401,6 +394,7 @@ const renderCart = () => {
     modalBody.insertAdjacentHTML('afterbegin', itemForBasket);
   });
 
+  // * We write the amount of the basket and display
   const totalPrice = basket.reduce((result, item) => {
     return result + (parseFloat(item.price) * item.count);
   }, 0);
@@ -438,10 +432,8 @@ const init = () => {
   });
 
   // * The event handlers ------------------------------------------ addEventListeners
-  cartButton.addEventListener('click', () => {
-    renderCart();
-    toggleModal();
-  });
+  cartButton.addEventListener('click', toggleModal);
+  cartButton.addEventListener('click', renderCart);
   BtnClearCart.addEventListener('click', () => {
     basket.length = 0;
     renderCart();
