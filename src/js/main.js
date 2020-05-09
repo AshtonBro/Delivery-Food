@@ -29,7 +29,12 @@ const cartButton = document.querySelector('#cart-button'),
 
 let login = localStorage.getItem('user-name');
 
-const basket = [];
+const basket = JSON.parse(localStorage.getItem('Delivery order')) || [];
+
+// * Save order to local storage
+const saveBusketLocal = () => {
+  localStorage.setItem('Delivery order', JSON.stringify(basket));
+};
 
 // * asynchronous function, server request and work with JSON bd
 const getData = async (url) => {
@@ -360,6 +365,7 @@ const addToBusket = (event) => {
       });
     }
   }
+  saveBusketLocal();
 };
 
 // * The function will form a list of goods
@@ -414,7 +420,7 @@ const changeCount = (event) => {
     }
     renderCart();
   }
-
+  saveBusketLocal();
 };
 
 // * Calls up all the necessary functions.
@@ -433,6 +439,7 @@ const init = () => {
     basket.length = 0;
     renderCart();
     toggleModal();
+    localStorage.removeItem('Delivery order');
   });
   btncClose.addEventListener('click', toggleModal);
   cardsRestaurants.addEventListener('click', openCurCard);
