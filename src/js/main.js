@@ -29,11 +29,20 @@ const cartButton = document.querySelector('#cart-button'),
 
 let login = localStorage.getItem('user-name');
 
-const basket = JSON.parse(localStorage.getItem('Delivery order')) || [];
+const basket = [];
+
+// * The function returns login-bound information from the local storage
+const loadBasket = () => {
+  if (localStorage.getItem(login)) {
+    JSON.parse(localStorage.getItem(login)).forEach((item) => {
+      basket.push(item);
+    });
+  }
+};
 
 // * Save order to local storage
 const saveBusketLocal = () => {
-  localStorage.setItem('Delivery order', JSON.stringify(basket));
+  localStorage.setItem(login, JSON.stringify(basket));
 };
 
 // * asynchronous function, server request and work with JSON bd
@@ -79,7 +88,7 @@ const authorized = () => {
   // * We clear the login field, local storage and hide the buttons
   const logOut = () => {
     login = null;
-
+    basket.length = 0;
     btnAuth.style.display = '';
     userName.style.display = '';
     btnOut.style.display = '';
@@ -92,12 +101,12 @@ const authorized = () => {
   };
 
   userName.textContent = login;
-
   btnAuth.style.display = 'none';
   userName.style.display = 'inline';
   btnOut.style.display = 'flex';
   cartButton.style.display = 'flex';
   btnOut.addEventListener('click', logOut);
+  loadBasket();
 };
 
 // * not authorized function
@@ -439,7 +448,7 @@ const init = () => {
     basket.length = 0;
     renderCart();
     toggleModal();
-    localStorage.removeItem('Delivery order');
+    localStorage.removeItem(login);
   });
   btncClose.addEventListener('click', toggleModal);
   cardsRestaurants.addEventListener('click', openCurCard);
