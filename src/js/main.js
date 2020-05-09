@@ -280,14 +280,14 @@ const openCurCard = () => {
 
 // * Function for finding food and restaurants
 const search = (event) => {
-
+  // * Check if you are authorized
   if (!userName.innerText == '') {
-    // * keyCode = 13 it is Enter
+    // * keyCode = 13 it is Enter when you press enter the function starts the search
     if (event.keyCode === 13) {
       const target = event.target;
       const targetValue = target.value.toLowerCase().trim();
       target.value = '';
-
+      // * If the number of lines in the search is less than two, then paint the border
       if (!targetValue || targetValue.length < 3) {
         target.style.backgroundColor = 'tomato';
         setTimeout(() => {
@@ -295,7 +295,7 @@ const search = (event) => {
         }, 2000);
         return;
       }
-
+      // * Array where we will record the products found
       const arrayOfProducts = [];
 
       getData('db/partners.json').then((data) => {
@@ -398,7 +398,6 @@ const renderCart = () => {
       </div>
     </div>
     `;
-
     modalBody.insertAdjacentHTML('afterbegin', itemForBasket);
   });
 
@@ -407,7 +406,6 @@ const renderCart = () => {
   }, 0);
 
   modalPricetag.textContent = totalPrice + ' ₽';
-
 };
 
 // * the function changes count when clicking on + and - in the basket
