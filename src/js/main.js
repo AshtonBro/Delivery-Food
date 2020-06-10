@@ -336,39 +336,7 @@ const search = (event) => {
   }
 };
 
-// * The function adds the item to the cart.
-const addToBusket = (event) => {
-  const target = event.target;
 
-  // * A button when clicked that will add the product to the basket
-  const buttonAddToBusket = target.closest('.button-add-cart');
-
-  // * If you clicked in a basket, we pick up the item’s assignment, price and id
-  if (buttonAddToBusket) {
-    const cardFood = target.closest('.card');
-    const cardTitle = cardFood.querySelector('.card-title-reg').textContent;
-    const cardPrice = cardFood.querySelector('.card-price').textContent;
-    const id = buttonAddToBusket.id;
-
-    // * Check is there already such a product in our basket
-    const food = basket.find((item) => {
-      return item.id === id;
-    });
-
-    // * If such an id already exists, then add +1, if not, then add the product
-    if (food) {
-      food.count += 1;
-    } else {
-      basket.push({
-        id: id,
-        title: cardTitle,
-        price: cardPrice,
-        count: 1
-      });
-    }
-  }
-  saveBusketLocal();
-};
 
 // * The function will form a list of goods
 const renderCart = () => {
