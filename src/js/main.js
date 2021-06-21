@@ -150,7 +150,7 @@ const notAuthorized = () => {
   logInForm.addEventListener('submit', logIn);
 };
 
-// * exit to the main menu
+// * return to main menu
 const returnMain = () => {
   containerPromo.classList.remove('hide');
   restaurants.classList.remove('hide');
